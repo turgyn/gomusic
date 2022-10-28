@@ -4,11 +4,13 @@ import (
 	"errors"
 	"gomusic/api"
 	"gomusic/model"
+	"gomusic/repository"
 )
 
 type TrackService struct {
 	artistService ArtistService
 	albumService  AlbumService
+	trackRepository repository.TrackRepository
 }
 
 func (ts TrackService) CreateTrack(dto api.CreateTrackDto) (model.TrackEntity, error) {
@@ -24,8 +26,7 @@ func (ts TrackService) CreateTrack(dto api.CreateTrackDto) (model.TrackEntity, e
 		AlbumId:  dto.AlbumId,
 		Duration: calculateDuration(dto.File), Lyrics: dto.Lyrics}
 
-	// todo: save and update track (after connection with db)
-	return track, nil
+	return ts.trackRepository.createdTrack(track)
 }
 
 func calculateDuration(file string) int {
