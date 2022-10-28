@@ -1,9 +1,11 @@
 package domain
 
+import "gomusic/repository"
+
 type AlbumService struct {
+	albumRepository repository.AlbumRepository
 }
 
-// Todo: check from database
 func (as AlbumService) isExistsById(id int) bool {
-	return true
+	return albumRepository.isExistsById(id)
 }
